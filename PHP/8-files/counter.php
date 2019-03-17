@@ -1,7 +1,4 @@
-#!/usr/bin/env php
 <?php
-
-// * What about maintenance? (Object-oriented design)
 
 class Counter
 {
@@ -34,29 +31,4 @@ class Counter
     {
         return mb_strlen($input, 'UTF-8');
     }
-}
-
-$mode = "";
-if ($argc > 1) {
-    $mode = $argv[1];
-}
-
-$stdin = fopen('php://stdin', 'r');
-
-$counter = new Counter();
-while (false !== ($line = fgets($stdin))) {
-    $counter->update($line);
-}
-
-fclose($stdin);
-
-switch ($mode) {
-    case "-m":
-        echo $counter->bytes;
-        break;
-    case "-c":
-        echo $counter->chars;
-        break;
-    default:
-        echo $counter;
 }
