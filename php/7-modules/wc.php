@@ -17,6 +17,8 @@ while (false !== ($line = fgets($stdin))) {
 
 fclose($stdin);
 
+// Try to see what happens when you use a non-existing parameter name here, such
+// as $args->flag.
 switch ($args->mode) {
     case "-m":
         echo $counter->bytes;

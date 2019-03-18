@@ -7,24 +7,37 @@ require_once "args.php";
 // * What about maintenance (part II)? Includes
 
 $args = parse($argv);
-$stdin = fopen('php://stdin', 'r');
 
-$counter = new Counter();
-while (false !== ($line = fgets($stdin))) {
-    $counter->update($line);
+if (empty($args->files)) {
+    $args->files = ['php://stdin'];
 }
 
-fclose($stdin);
+$counters = [];
 
-// Try to see what happens when you use a non-existing parameter name here, such
-// as $args->flag.
-switch ($args->mode) {
-    case "-m":
-        echo $counter->bytes;
-        break;
-    case "-c":
-        echo $counter->chars;
-        break;
-    default:
-        echo $counter;
+foreach ($args->files as $file) {
+    $handle = fopen($file, 'r');
+    $counters[$file] = new Counter();
+    while (false !== ($line = fgets($handle))) {
+        $counters[$file]->update($line);
+    }
+    fclose($handle);
 }
+
+$total = 0;
+foreach ($args->files as $file) {
+    $counter = $counters[$file];
+    switch ($args->mode) {
+        case "-m":
+            $count = $counter->bytes;
+            break;
+        case "-c":
+            $count = $counter->chars;
+            break;
+        default:
+            $count = $counter;
+    }
+    echo $count . " " . $file . PHP_EOL;
+    $total += $count;
+}
+
+echo $count . " total" . PHP_EOL;
