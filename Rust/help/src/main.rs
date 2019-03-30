@@ -1,18 +1,25 @@
 use std::env;
 
+/// A function for counting the words in a `String`
 pub fn count_words(input: String) -> usize {
     input.split_whitespace().count()
 }
 
+/// A function to count the number of bytes in a `String`
 pub fn count_bytes(input: String) -> usize {
     input.len()
 }
 
+/// Count the number of chars in a `String`.
+/// Note that this is different from `input.len()` as
+/// one character can consist of multiple bytes
 pub fn count_chars(input: String) -> usize {
     input.chars().count()
 }
 
 fn main() {
+		/// Here is how to do argument handling in Rust.
+		/// The first argument is the name of the binary, so we skip it.
     for arg in env::args().skip(1) {
         println!("{}", arg);
         println!("{}", count_bytes(arg))
