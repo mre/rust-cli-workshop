@@ -16,3 +16,5 @@ Now Open `src/main.rs` and hack away!
 
 Go through the tasks in the `PHP` folder and try to
 write your version in Rust.
+
+If you get lost, check out the code in `rust/help` to get you back on track.
